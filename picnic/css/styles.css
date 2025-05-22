@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url('../assets/img/grass-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.right-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    z-index: 2;
+    position: relative;
+    margin-right: 20px;
+}
+
+.logo img {
+    width: 400px;
+    height: auto;
+}
+
+.buttons {
+    width: 600px;
+}
+
+button {
+    margin: 10px;
+    width: 160px;
+    height: 45px;
+    border-radius: 19px;
+    border: none;
+    box-shadow: 0 4px 5px rgba(44, 44, 44, 0.2);
+    background-color: white;
+    border: solid 4px #861C10;
+    transition: transform 0.3s ease;
+    text-transform: uppercase;
+    color: rgb(82, 82, 82);
+    font-weight: bold;
+}
+
+button:hover {
+    transform: translateY(-8px);
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cloth-picnic {
+    background-image: url('../assets/img/picnic.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 5px rgba(44, 44, 44, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.cloth-picnic:hover {
+    transform: translateY(-8px);
+
+}
+
+.cloth-picnic img {
+    width: 120px;
+    position: absolute;
+}
+
+#cake {
+    width: 150px;
+    top: 20px;
+    right: 160px;
+}
+
+#bread {
+    width: 100px;
+    top: 70px;
+    right: 35px;
+}
+
+#hot-dog {
+    top: 20px;
+    left: 20px;
+}
+
+#honey {
+    width: 135px;
+    top: 180px;
+    left: 30px;
+}
+
+#watermelon {
+    top: 200px;
+    right: 20px;
+}
+
+#fire {
+    top: 150px;
+    right: 150px;
+    width: 185px;
+}
+
+#sandwich {
+    bottom: 40px;
+    left: 60px;
+}
+
+#juice {
+    width: 70px;
+    bottom: 30px;
+    right: 50px;
+}
+
+#pancake {
+    width: 100px;
+    bottom: 30px;
+    right: 180px;
+}
+
+.escondido {
+    display: none;
+  }
