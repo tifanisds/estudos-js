@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E5ECFF;
+    padding-top: 50px;
+}
+
+.title {
+    width: 800px;
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 5px rgba(44, 44, 44, 0.2);
+    height: 100px;
+    display: flex;
+    padding: 20px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.title img {
+    width: 50px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.title h1 {
+    font-size: 30px;
+    color: rgb(15, 15, 74);
+}
+
+.input-area {
+    width: 800px;
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 5px rgba(44, 44, 44, 0.2);
+    display: flex;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.input-area input {
+    width: 590px;
+    height: 45px;
+    border: 1px solid #a5a9b5;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+.input-area button {
+    height: 45px;
+    width: 160px;
+    background-color: #4F46E5;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    margin-left: 15px;
+}
+
+.tasks-area {
+    width: 800px;
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 5px rgba(44, 44, 44, 0.2);
+    padding: 20px;
+}
+
+.tasks-area .tasks-title {
+    font-size: 25px;
+    color: rgb(15, 15, 74);
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.tasks-area ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tasks-area li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 758px;
+    height: 50px;
+    background-color: #F9FAFB;
+    list-style-type: none;
+    font-size: 16px;
+    color: rgb(15, 15, 74);
+    border: 1px solid #a5a9b5;
+    border-radius: 10px;
+    padding-left: 16px;
+    margin-bottom: 15px;
+}
+
+.tasks-area li button {
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #EF4444;
+    border: none;
+    margin-right: 15px;
+    color: white;
+}
