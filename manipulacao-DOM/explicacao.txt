@@ -1,0 +1,41 @@
+EXPLICAÇÕES SOBRE O DOM (Document Object Model)
+==============================================================
+
+-- O QUE É:
+Ele é uma representação da página HTML como uma árvore de objetos, onde cada elemento do HTML é um nó (node) que você pode acessar e manipular com JavaScript.
+
+HTML:
+
+<div id="container">
+  <h1>Hello</h1>
+  <p>Este é um parágrafo.</p>
+</div>
+
+
+DOM (simplificado):
+
+document
+ └─ html
+     └─ body
+         └─ div#container
+             ├─ h1
+             └─ p
+
+-- SELECIONANDO ELEMENTOS NO DOM
+Você precisa acessar os elementos para manipular. Existem várias formas:
+
+2.1. Por ID
+const titulo = document.getElementById('meuTitulo');
+
+2.2. Por classe
+const itens = document.getElementsByClassName('minhaClasse'); // Retorna HTMLCollection (array-like)
+
+2.3. Por tag
+const paragrafos = document.getElementsByTagName('p'); // HTMLCollection
+
+2.4. Query Selector (mais moderno)
+
+Seleciona um elemento (o primeiro que combinar)
+
+const primeiroParagrafo = document.querySelector('p');
+const container = document.querySelector('#container');
