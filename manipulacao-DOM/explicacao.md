@@ -270,22 +270,17 @@ primeiroItem.remove();
 
 ## Criar elementos com createElement
 
-- Remove um filho específico de um elemento.
+- Permite criar novos elementos HTML para adicionar dinamicamente.
 
 #### Exemplo:
 ```JS
-const lista = document.getElementById('lista');
-const primeiroItem = lista.firstElementChild;
+const novoDiv = document.createElement('div');
+novoDiv.innerText = "Nova div criada";
 
-// Remove o primeiro item da lista
-lista.removeChild(primeiroItem);
-
-```
-
-- Alternativa moderna: element.remove() remove o próprio elemento do DOM.
-
-```JS
-primeiroItem.remove();
+document.body.appendChild(novoDiv);
 
 ```
+
+- Depois, você pode usar setAttribute, classList e appendChild para manipulá-lo.
+
 --------------------------------------------------------------
