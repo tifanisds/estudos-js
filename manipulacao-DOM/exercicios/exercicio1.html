@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 1 - Selecionando Elementos</title>
+</head>
+
+<body>
+    <h1>Exercício 1 - Selecionando Elementos</h1>
+    <p class="texto">Parágrafo 1</p>
+    <p class="texto">Parágrafo 2</p>
+    <p class="texto">Parágrafo 3</p>
+    <p><strong>Instruções:</strong> <br> - Use <code>getElementById</code>, <code>getElementsByClassName</code>,
+        <code>getElementsByTagName</code> e <code>querySelector</code> no console. <br> - Teste selecionar e alterar o
+        texto dos parágrafos, por exemplo: mudar o conteúdo de um <code>&lt;p&gt;</code> usando <code>innerText</code>.
+    </p>
+    <script> 
+        const tagName = document.getElementsByTagName("p") 
+        tagName[2].innerText = "Select pelo tag name" 
+
+        const className = document.getElementsByClassName("texto") 
+        className[1].innerText = "Select pela classe" 
+
+        const ultimo = document.querySelector(".texto") // Pega o primeiro item correspondente ao parametro
+        ultimo.innerText = "Query Selector"
+    </script>
+</body>
+
+</html>
