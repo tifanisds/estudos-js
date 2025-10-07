@@ -48,7 +48,7 @@ O que retorna:
 HTMLCollection (array-like) — live: se o DOM mudar (adicionar/remover <p>), a collection é atualizada automaticamente.
 
 ### 2) Selecionar por ID
-```HTML
+```JS
 const cabecalho = document.getElementById('meu-id'); 
 ```
 O que retorna:
@@ -59,7 +59,7 @@ Propriedades importantes:
 - getElementById é tradicionalmente o mais rápido (otimizado pelos browsers).
 
 ### 3) Selecionar por classe
-```HTML
+```JS
 const cards = document.getElementsByClassName('card'); // HTMLCollection (live)
 ```
 
@@ -67,7 +67,7 @@ O que retorna:
 HTMLCollection (array-like) e live — muda quando elementos são adicionados/removidos/classList alteradas.
 
 ### 4) querySelector e querySelectorAll (o poder dos seletores CSS)
-```HTML
+```JS
 const primeiro = document.querySelector('.menu');
 const todos = document.querySelectorAll('.card .titulo');
 ```
