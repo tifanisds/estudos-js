@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercício 2 - Manipulando Texto e HTML</title>
+</head>
+<body>
+  <h1>Exercício 2 - Manipulando Texto e HTML</h1>
+
+  <div id="conteudo">
+    <p>Texto inicial do parágrafo.</p>
+  </div>
+
+  <button id="mudarTexto">Mudar texto (innerText)</button>
+  <button id="mudarHTML">Mudar HTML (innerHTML)</button>
+
+  <p><strong>Instruções:</strong> <br>
+    - Ao clicar em "Mudar texto", altere o texto do parágrafo usando <code>innerText</code>. <br>
+    - Ao clicar em "Mudar HTML", substitua o conteúdo por uma tag <code>&lt;strong&gt;</code> usando <code>innerHTML</code>. <br> 
+    - Observe a diferença entre os dois.  
+  </p>
+
+  <script>
+    const paragrafo = document.querySelector("#conteudo p")
+    const boxConteudo = document.querySelector("#conteudo")
+
+    const mudarTextoBtn = document.getElementById("mudarTexto")
+    mudarTextoBtn.addEventListener("click", () => {
+        paragrafo.innerText = "Novo texto"
+    })
+
+    const mudarHtmlBtn = document.getElementById("mudarHTML")
+    mudarHtmlBtn.addEventListener("click", () => {
+        boxConteudo.innerHTML = "<strong>Texto bold</strong>"
+    })
+  </script>
+</body>
+</html>
