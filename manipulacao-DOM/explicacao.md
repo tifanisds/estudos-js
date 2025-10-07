@@ -14,19 +14,20 @@ HTML:
 
 DOM (simplificado):
 
+```HTML
 document
  └─ html
      └─ body
          └─ div#container
              ├─ h1
              └─ p
+```
 
--- SELECIONANDO ELEMENTOS NO DOM
-
+## SELECIONANDO ELEMENTOS NO DOM
 ==============================================================
 
 Visão rápida antes de começar
-MÉTODOS NATIVOS:
+### MÉTODOS NATIVOS:
 
 - document.getElementById(id)
 - document.getElementsByClassName(className)
@@ -39,15 +40,17 @@ querySelector usa gramática de seletores CSS (muito flexível).
 
 Alguns retornos são live (se atualizam quando DOM muda) e outros são static (são “fotografias” naquele momento). Isso muda como você deve iterar/remover elementos.
 
-- 1) Selecionar por tag name
+### 1) Selecionar por tag name
+```HTML
 const paragrafos = document.getElementsByTagName('p'); 
-
+```
 O que retorna:
 HTMLCollection (array-like) — live: se o DOM mudar (adicionar/remover <p>), a collection é atualizada automaticamente.
 
-- 2) Selecionar por ID
+### 2) Selecionar por ID
+```HTML
 const cabecalho = document.getElementById('meu-id'); 
-
+```
 O que retorna:
 Um Element (o elemento) ou null se não existir.
 
@@ -55,15 +58,19 @@ Propriedades importantes:
 - IDs devem ser únicos dentro do documento (boa prática/semântica).
 - getElementById é tradicionalmente o mais rápido (otimizado pelos browsers).
 
-- 3) Selecionar por classe
+### 3) Selecionar por classe
+```HTML
 const cards = document.getElementsByClassName('card'); // HTMLCollection (live)
+```
 
 O que retorna:
 HTMLCollection (array-like) e live — muda quando elementos são adicionados/removidos/classList alteradas.
 
-- 4) querySelector e querySelectorAll (o poder dos seletores CSS)
+### 4) querySelector e querySelectorAll (o poder dos seletores CSS)
+```HTML
 const primeiro = document.querySelector('.menu');
 const todos = document.querySelectorAll('.card .titulo');
+```
 
 - querySelector → retorna o primeiro elemento que combina ou null.
 - querySelectorAll → retorna NodeList (static) com todos os matches (não live).
