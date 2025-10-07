@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auja js</title>
+
+    <style>
+        .vermelho {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="nome">Tifani</h1>
+
+    <label for="">Nome</label>
+    <input type="text" id="novo">
+    <button id="btn">Enviar</button>
+
+    <ul id="lista">
+        <li>Item 1</li>
+    </ul>
+
+    <script>
+        const lista = document.querySelector("#lista")
+        const novoTexto = document.querySelector("#novo")
+        const botao = document.querySelector("#btn")
+
+        botao.addEventListener("click", () => {
+            if (!(lista.children.length >= 3)) {
+                if (novoTexto.value !== "") {
+                    if (novoTexto.value.length > 5) {
+                        const novoElemento = document.createElement("li")
+                        novoElemento.innerText = novoTexto.value
+
+                        lista.appendChild(novoElemento)
+                        novoTexto.value = ""
+                    } else {
+                        alert("Insira um valor maior que 5 caracteres")
+                    }
+                } else {
+                    alert("Não é possível adicionar campos vazios")
+                }
+            } else {
+                alert("O limite são três itens")
+            }
+        })
+
+    </script>
+</body>
+
+</html>
