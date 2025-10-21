@@ -1,49 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de nomes</title>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador de Nomes - IBGE</title>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 
 <body>
-    <h1>Seu site buscador de nomes</h1>
-    <label for="buscador">Digite o nome aqui</label>
-    <input type="text" placeholder="EX.: Maria">
-    <button>Buscar</button>
+  <div x-data="buscador" class="container">
+    <h1>Buscador de nomes (IBGE)</h1>
 
-    <ul>
-        <template>
-            <li></li>
-        </template>
-    </ul>
+    <label for="buscador">Digite o nome:</label>
+    <input type="text" placeholder="Ex.: Maria" x-model="nome">
+    <button @click="buscar()">Buscar</button>
 
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('buscador', () => ({
-                nome: '',
-                listaDeFrequencia: [],
+    <template x-if="dados">
+      <div>
+        <h2 x-text="'Nome: ' + dados.nome"></h2>
+        <h3 x-text="'Localidade: ' + dados.localidade"></h3>
 
-                buscar() {
-                    fetch(`https://servicodados.ibge.gov.br/api/v2/censos/nomes/${this.nome}`)
-                        .then(response => response.json())
-                        .then(dados => {
-                            const pessoasNome = dados.map(item => item.nome)
-                            const resultado = JSON.stringify(pessoasNome)
+        <h4>Frequência por período:</h4>
+        <ul>
+          <template x-for="item in dados.res" :key="item.periodo">
+            <li>
+              <strong x-text="item.periodo"></strong>:
+              <span x-text="item.frequencia"></span>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </template>
 
-                            localStorage.setItem("listaDeFrequencia", resultado)
-                            this.listaDeFrequencia = pessoasNome
-                        })
-                        .catch(() => {
-                            console.log("Deu erro na busca!")
-                        })
-                }
-            }))
-        })
+    <p x-show="erro" style="color: red" x-text="erro"></p>
+  </div>
 
-    </script>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('buscador', () => ({
+        nome: '',
+        dados: null,
+        erro: '',
+
+        buscar() {
+          this.erro = ''
+          this.dados = null
+
+          if (!this.nome.trim()) {
+            this.erro = "Digite um nome antes de buscar!"
+            return
+          }
+
+          fetch(`https://servicodados.ibge.gov.br/api/v2/censos/nomes/${this.nome}`)
+            .then(response => {
+              if (!response.ok) throw new Error('Erro ao buscar nome!')
+              return response.json()
+            })
+            .then(data => {
+              if (data.length === 0) {
+                this.erro = "Nenhum resultado encontrado!"
+              } else {
+                this.dados = data[0] 
+              }
+            })
+            .catch(() => {
+              this.erro = "Erro na comunicação com a API."
+            })
+        }
+      }))
+    })
+  </script>
 </body>
 
 </html>
