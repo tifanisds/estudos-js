@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de nomes</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+
+<body>
+    <h1>Seu site buscador de nomes</h1>
+    <label for="buscador">Digite o nome aqui</label>
+    <input type="text" placeholder="EX.: Maria">
+    <button>Buscar</button>
+
+    <ul>
+        <template>
+            <li></li>
+        </template>
+    </ul>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('buscador', () => ({
+                nome: '',
+                listaDeFrequencia: [],
+
+                buscar() {
+                    fetch(`https://servicodados.ibge.gov.br/api/v2/censos/nomes/${this.nome}`)
+                        .then(response => response.json())
+                        .then(dados => {
+                            const pessoasNome = dados.map(item => item.nome)
+                            const resultado = JSON.stringify(pessoasNome)
+
+                            localStorage.setItem("listaDeFrequencia", resultado)
+                            this.listaDeFrequencia = pessoasNome
+                        })
+                        .catch(() => {
+                            console.log("Deu erro na busca!")
+                        })
+                }
+            }))
+        })
+
+    </script>
+</body>
+
+</html>

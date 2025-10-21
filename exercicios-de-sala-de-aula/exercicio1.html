@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu primeiro programa com o Alpine.js</title>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</head>
+<body>
+    <div x-data="dados">
+        <input type="text" x-model="uf" placeholder="Digite o UF. Ex.: BA, SP, RJ, etc...">
+        <button @click="buscar">Buscar</button>
+        <ul>
+            <template x-for="item in municipios">
+                <li x-text="item"></li>
+            </template>
+        </ul>
+    </div>
+    
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('dados', () => ({
+                uf: '',
+                municipios: [],
+    
+                buscar() {
+                    const municipios = localStorage.getItem("municipios")
+                    
+                    if (municipios) {
+                        this.municipios = JSON.parse(municipios)
+                        return
+                    }
+                    
+                    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${this.uf}/distritos`)
+                    .then((response) => {
+                        return response.json()
+                    }).then((dados) => {
+                        const nomeMunicipios = dados.map(function(municipio) {
+                            return municipio.nome
+                        })
+
+                        const resultado = JSON.stringify(nomeMunicipios)
+
+                        localStorage.setItem("municipios", resultado)
+                        this.municipios = nomeMunicipios
+                    })
+                    .catch(function() {
+                        console.log("Deu merda!!!")
+                    })
+
+                }
+            }))
+        })
+    </script>
+    
+</body>
+</html>
