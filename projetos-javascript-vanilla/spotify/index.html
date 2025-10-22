@@ -260,6 +260,11 @@
 
                 liPlaylist.appendChild(pNome)
                 liPlaylist.appendChild(pArtista)
+                liPlaylist.setAttribute('class', 'musica-da-playlist')
+
+                liPlaylist.addEventListener('click', () => {
+                    liPlaylist.remove();
+                });
 
                 musicasPlaylist.appendChild(liPlaylist)
 
@@ -271,22 +276,6 @@
     }
 
     listagemDeMusicas(musicas)
-
-    const musicasPlaylist = document.querySelector('.musicas-playlist')
-    const liPlaylist = document.createElement('li')
-
-    playlist.forEach(musica => {
-        const pNome = document.createElement('p')
-        pNome.innerText = musica.nome
-
-        const pArtista = document.createElement('p')
-        pArtista.innerText = musica.artista
-
-        liPlaylist.appendChild(pNome)
-        liPlaylist.appendChild(pArtista)
-
-        musicasPlaylist.appendChild(liPlaylist)
-    })
 
 </script>
 
