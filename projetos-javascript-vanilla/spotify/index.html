@@ -220,10 +220,13 @@
 
     const playlist = []
 
+    //Função principal responsável por adc e remover músicas da playlist
     function listagemDeMusicas(musicas) {
         const listaDeMusicas = document.querySelector(".lista-de-musicas")
 
+        //Crio um forEach para percorrer cada música do array 'músicas'
         musicas.forEach(musica => {
+            //Esse forEach vai ser o responsável por criar os elementos e adicionar os valores
             const li = document.createElement('li')
 
             const pNome = document.createElement('p')
@@ -241,9 +244,13 @@
             listaDeMusicas.appendChild(li)
         })
 
+        //Nessa parte iremos selecionar todos os li´s criados anteriormente que tenham a classe 'musica'
         const liMusicas = document.querySelectorAll('.musica')
+
+        //Iremos fazer um forEach por esses li´s e adc um eventListener neles
         liMusicas.forEach(li => {
             li.addEventListener('click', () => {
+                //Quando uma música for clicada, iremos criar um novo li com as informações dessa música dentro do ul 'musicas-playlist'
                 const musicaSelecionada = {
                     nome: li.querySelector('.nomeMusica').innerText,
                     artista: li.querySelector('.artista').innerText
@@ -262,6 +269,7 @@
                 liPlaylist.appendChild(pArtista)
                 liPlaylist.setAttribute('class', 'musica-da-playlist')
 
+                //Já na criação do li da playlist eu já adc um eventListener nele também, para que quando ele for clicado, se auto remova da estrutura do HTML
                 liPlaylist.addEventListener('click', () => {
                     liPlaylist.remove();
                 });
