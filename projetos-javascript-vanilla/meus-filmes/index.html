@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Filmes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #filme-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        #filme-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #adicionar-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #adicionar-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #adicionar-btn:active {
+            transform: translateY(0);
+        }
+
+        .lista-filmes {
+            list-style: none;
+        }
+
+        .filme-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .filme-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .filme-nome {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-curtir, .btn-excluir {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .btn-curtir {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-curtir:hover {
+            transform: scale(1.1);
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-excluir {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-excluir:hover {
+            background: #ee5a52;
+            transform: scale(1.05);
+        }
+
+        .btn-excluir:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .input-section {
+                flex-direction: column;
+            }
+
+            .filme-item {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .filme-nome {
+                text-align: center;
+            }
+
+            .botoes {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎬 Meus Filmes</h1>
+        
+        <div class="input-section">
+            <input type="text" id="filme-input" placeholder="Digite o nome do filme...">
+            <button id="adicionar-btn">Adicionar Filme</button>
+        </div>
+
+        <ul class="lista-filmes">
+
+        </ul>
+    </div>
+</body>
+
+<script>
+    const filmes = []
+
+    const listaDeFilmes = document.querySelector('.lista-filmes')
+
+    const input = document.querySelector('#filme-input')
+    const btnEnviar = document.querySelector('#adicionar-btn')
+
+    btnEnviar.addEventListener('click', () => {
+        const novoFilme = input.value
+        filmes.push(novoFilme)
+        console.log(filmes)
+
+        const li = document.createElement('li')
+        li.setAttribute('class', 'filme-item')
+
+        const p = document.createElement('p')
+        p.setAttribute('class', 'filme-nome')
+        p.innerText = novoFilme
+
+        const div = document.createElement('div')
+        div.setAttribute('class', 'botoes')
+
+        let contador = 0
+        const btnCurtir = document.createElement('button')
+        btnCurtir.setAttribute('class', 'btn-curtir')
+        btnCurtir.innerText = '❤️ Curtir: ' + contador
+        btnCurtir.addEventListener('click', () => {
+            contador++
+            btnCurtir.innerText = '❤️ Curtir: ' + contador
+        })
+
+        const btnExcluir = document.createElement('button')
+        btnExcluir.setAttribute('class', 'btn-excluir')
+        btnExcluir.innerText = 'Excluir'
+        btnExcluir.addEventListener('click', () => {
+            li.remove()
+        })
+
+        div.appendChild(btnCurtir)
+        div.appendChild(btnExcluir)
+
+        li.appendChild(p)
+        li.appendChild(div)
+
+        listaDeFilmes.appendChild(li)
+    })
+
+</script>
+
+</html>
