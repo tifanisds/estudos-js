@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Circular', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(180deg, #121212 0%, #000000 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .musicas,
+        .playlist {
+            background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .musicas:hover,
+        .playlist:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(30, 215, 96, 0.2);
+        }
+
+        .div-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1DB954;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tags p {
+            background: #1DB954;
+            color: #000000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tags p:hover {
+            background: #1ed760;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.4);
+        }
+
+        .playlist>p:nth-child(2) {
+            color: #b3b3b3;
+            font-size: 14px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .lista-de-musicas li,
+        .playlist ul li {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lista-de-musicas li::before,
+        .playlist ul li::before {
+            content: '▶';
+            position: absolute;
+            left: 20px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            color: #1DB954;
+            font-size: 12px;
+        }
+
+        .lista-de-musicas li:hover,
+        .playlist ul li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: #1DB954;
+            padding-left: 45px;
+        }
+
+        .lista-de-musicas li:hover::before,
+        .playlist ul li:hover::before {
+            opacity: 1;
+        }
+
+        .lista-de-musicas li:active,
+        .playlist ul li:active {
+            transform: scale(0.98);
+        }
+
+        /* Estilos para nome e artista das músicas */
+        .lista-de-musicas li p:first-child {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+
+        .lista-de-musicas li p:last-child {
+            font-size: 13px;
+            color: #b3b3b3;
+            font-weight: 400;
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animação de entrada */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .musicas,
+        .playlist {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .playlist {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .musicas {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="musicas">
+            <p class="div-title">Suas músicas</p>
+            <div class="tags">
+                <p>Músicas</p>
+                <p>Pop</p>
+            </div>
+
+            <div class="musicas">
+                <ul class="lista-de-musicas">
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="playlist">
+            <p class="div-title">Favoritas ❤️</p>
+            <p>Criada por você</p>
+
+            <ul class="musicas-playlist">
+
+            </ul>
+        </div>
+    </div>
+</body>
+
+<script>
+    const musicas = [
+        //Lista de músicas
+        { nome: "Manchild", artista: "Sabrina Carpenter" },
+        { nome: "Sports car", artista: "Tate McRae" },
+        { nome: "The Fate of Ophelia", artista: "Taylor Swift" },
+        { nome: "TIT FOR TAT", artista: "Tate McRae" },
+        { nome: "The Subway", artista: "Chappell Roan" },
+        { nome: "Kiss It, Kiss It", artista: "Reneé Rapp" },
+        { nome: "Gabriela", artista: "Katseye" },
+    ]
+
+    const playlist = []
+
+    function listagemDeMusicas(musicas) {
+        const listaDeMusicas = document.querySelector(".lista-de-musicas")
+
+        musicas.forEach(musica => {
+            const li = document.createElement('li')
+
+            const pNome = document.createElement('p')
+            pNome.innerText = musica.nome
+            pNome.setAttribute('class', 'nomeMusica')
+
+            const pArtista = document.createElement('p')
+            pArtista.innerText = musica.artista
+            pArtista.setAttribute('class', 'artista')
+
+            li.appendChild(pNome)
+            li.appendChild(pArtista)
+            li.setAttribute("class", "musica")
+
+            listaDeMusicas.appendChild(li)
+        })
+
+        const liMusicas = document.querySelectorAll('.musica')
+        liMusicas.forEach(li => {
+            li.addEventListener('click', () => {
+                const musicaSelecionada = {
+                    nome: li.querySelector('.nomeMusica').innerText,
+                    artista: li.querySelector('.artista').innerText
+                }
+
+                const musicasPlaylist = document.querySelector('.musicas-playlist')
+                const liPlaylist = document.createElement('li')
+
+                const pNome = document.createElement('p')
+                pNome.innerText = musicaSelecionada.nome
+
+                const pArtista = document.createElement('p')
+                pArtista.innerText = musicaSelecionada.artista
+
+                liPlaylist.appendChild(pNome)
+                liPlaylist.appendChild(pArtista)
+
+                musicasPlaylist.appendChild(liPlaylist)
+
+
+                playlist.push(musicaSelecionada)
+                console.log('Playlist atual:', playlist)
+            })
+        })
+    }
+
+    listagemDeMusicas(musicas)
+
+    const musicasPlaylist = document.querySelector('.musicas-playlist')
+    const liPlaylist = document.createElement('li')
+
+    playlist.forEach(musica => {
+        const pNome = document.createElement('p')
+        pNome.innerText = musica.nome
+
+        const pArtista = document.createElement('p')
+        pArtista.innerText = musica.artista
+
+        liPlaylist.appendChild(pNome)
+        liPlaylist.appendChild(pArtista)
+
+        musicasPlaylist.appendChild(liPlaylist)
+    })
+
+</script>
+
+</html>
