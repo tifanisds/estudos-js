@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Estudos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 700px;
+            width: 100%;
+            padding: 45px;
+        }
+
+        h1 {
+            color: #2c5364;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+            font-size: 14px;
+        }
+
+        .input-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        #curso-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        #curso-input:focus {
+            outline: none;
+            border-color: #2c5364;
+            box-shadow: 0 0 0 3px rgba(44, 83, 100, 0.1);
+        }
+
+        #adicionar-btn {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #2c5364 0%, #0f2027 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        #adicionar-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(44, 83, 100, 0.3);
+        }
+
+        #adicionar-btn:active {
+            transform: translateY(0);
+        }
+
+        .lista-cursos {
+            list-style: none;
+        }
+
+        .curso-item {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 20px 25px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 5px solid #2c5364;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .curso-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .curso-item.concluido {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left-color: #28a745;
+            opacity: 0.8;
+        }
+
+        .curso-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .curso-icone {
+            font-size: 24px;
+        }
+
+        .curso-nome {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .curso-item.concluido .curso-nome {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .curso-status {
+            background: #28a745;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .curso-item.concluido .curso-status {
+            display: block;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-concluir, .btn-remover {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .btn-concluir {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-concluir:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .curso-item.concluido .btn-concluir {
+            background: #6c757d;
+        }
+
+        .curso-item.concluido .btn-concluir:hover {
+            background: #5a6268;
+        }
+
+        .btn-remover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-remover:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+
+        .btn-concluir:active, .btn-remover:active {
+            transform: scale(0.95);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c5364;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .curso-item {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .curso-info {
+                justify-content: center;
+            }
+
+            .botoes {
+                justify-content: center;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📚 Lista de Estudos</h1>
+        <p class="subtitle">Organize seus cursos e acompanhe seu progresso</p>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="curso-input" placeholder="Digite o nome do curso (ex: PHP, JavaScript, SQL)...">
+                <button id="adicionar-btn">➕ Adicionar Curso</button>
+            </div>
+        </div>
+
+        <ul class="lista-cursos">
+            
+        </ul>
+
+    </div>
+</body>
+
+    <script>
+        const input = document.querySelector('#curso-input')
+        const btnEnviar = document.querySelector('#adicionar-btn')
+        const listaDeCursos = document.querySelector('.lista-cursos')
+
+        btnEnviar.addEventListener('click', () => {
+            const cursoEnviado = input.value
+
+            const li = document.createElement('li')
+            li.setAttribute('class', 'curso-item')
+
+            const divCursoInfo = document.createElement('div')
+            const spanCursoNome = document.createElement('span')
+            spanCursoNome.setAttribute('class', 'curso-nome')
+            spanCursoNome.innerText = cursoEnviado
+
+            const divBotoes = document.createElement('div')
+            divBotoes.setAttribute('class', 'botoes')
+            const btnConcluir = document.createElement('button')
+            btnConcluir.innerText = '✓ Concluído'
+            btnConcluir.setAttribute('class', 'btn-concluir')
+
+            btnConcluir.addEventListener('click', () => {
+                li.setAttribute('class', 'curso-item concluido')
+                btnConcluir.remove()
+                const btnDesfazer = document.createElement('button')
+                btnDesfazer.setAttribute('class', 'btn-concluir')
+                btnDesfazer.innerText = 'Reabrir ↩️'
+                btnDesfazer.addEventListener('click', () => {
+                    li.setAttribute('class', 'curso-item')
+                    btnDesfazer.remove()
+                    divBotoes.appendChild(btnConcluir)
+                })
+                divBotoes.appendChild(btnDesfazer)
+
+            })
+
+            const btnRemover = document.createElement('button')
+            btnRemover.innerText = '🗑️ Remover'
+            btnRemover.setAttribute('class', 'btn-remover')
+            btnRemover.addEventListener('click', () => {
+                li.remove()
+            })
+
+            listaDeCursos.appendChild(li)
+            li.appendChild(divCursoInfo)
+            li.appendChild(divBotoes)
+            divCursoInfo.appendChild(spanCursoNome)
+            divBotoes.appendChild(btnRemover)
+            divBotoes.appendChild(btnConcluir)
+        })
+        
+    </script>
+</html>
