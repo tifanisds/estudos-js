@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Mensagem Secreta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 600px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 36px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .reveal-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(30, 60, 114, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(30, 60, 114, 0.5);
+        }
+
+        .reveal-btn:active {
+            transform: translateY(0);
+        }
+
+        .message-container {
+            margin-top: 35px;
+            padding: 35px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lock-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            opacity: 0.6;
+        }
+
+        .message-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .secret-message {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #1e3c72;
+        }
+
+        .message-text {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        /* Blur removido - classe mantida apenas por segurança */
+        .hidden-state {
+            /* Nenhum efeito aplicado */
+        }
+
+        .visible-state {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .warning {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+            font-size: 13px;
+            color: #856404;
+            text-align: left;
+        }
+
+        .warning strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .icon {
+                font-size: 60px;
+            }
+
+            .reveal-btn {
+                font-size: 16px;
+                padding: 18px;
+            }
+
+            .message-container {
+                padding: 25px;
+            }
+
+            .message-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" x-data="mensagemSecreta()">
+        <div class="icon">🔐</div>
+        <h1>Mensagem Secreta</h1>
+        <p class="subtitle">Esta mensagem está protegida e só pode ser revelada uma vez. Clique no botão abaixo para visualizar o conteúdo secreto.</p>
+
+        <button class="reveal-btn" @click="mostrarEsconder()">🔓 Clique aqui para revelar a mensagem secreta</button>
+
+        <div class="message-container" x-show="mostrarMensagem">
+            <div class="lock-icon">🔒</div>
+            <div class="message-label">Mensagem Oculta</div>
+            
+            <!-- Blur removido -->
+            <div class="secret-message">
+                <p class="message-text">
+                    <strong>🎉 Parabéns!</strong><br><br>
+                    Você descobriu a mensagem secreta! Esta é uma informação confidencial que estava protegida. 
+                    O código de acesso é: <strong>ULTRA-SECRETO-2024</strong>
+                    <br><br>
+                    Lembre-se de guardar esta informação em um lugar seguro e não compartilhar com ninguém. 
+                    Esta mensagem se autodestruirá em... brincadeira! 😄
+                </p>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Aviso de Segurança</strong>
+            Certifique-se de que ninguém está olhando sua tela antes de revelar a mensagem.
+        </div>
+    </div>
+
+    <script>
+        function mensagemSecreta() {
+            return {
+                mostrarMensagem: false,
+
+                mostrarEsconder() {
+                    this.mostrarMensagem = !this.mostrarMensagem
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
