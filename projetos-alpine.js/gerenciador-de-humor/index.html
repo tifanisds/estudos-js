@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Gerenciador de Humor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .mood-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px;
+            border-radius: 25px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .mood-display:hover {
+            transform: scale(1.02);
+        }
+
+        .mood-label {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .current-mood {
+            font-size: 120px;
+            line-height: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .mood-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .moods-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .mood-btn {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mood-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .mood-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .mood-btn.feliz:hover {
+            background: linear-gradient(135deg, #fff9c4 0%, #ffeb3b 100%);
+        }
+
+        .mood-btn.bravo:hover {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef5350 100%);
+        }
+
+        .mood-btn.triste:hover {
+            background: linear-gradient(135deg, #bbdefb 0%, #42a5f5 100%);
+        }
+
+        .mood-btn.sono:hover {
+            background: linear-gradient(135deg, #d1c4e9 0%, #9575cd 100%);
+        }
+
+        .mood-icon {
+            font-size: 50px;
+            line-height: 1;
+        }
+
+        .mood-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .info-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-text {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .mood-display {
+                padding: 40px;
+            }
+
+            .current-mood {
+                font-size: 90px;
+            }
+
+            .mood-text {
+                font-size: 20px;
+            }
+
+            .mood-grid {
+                gap: 12px;
+            }
+
+            .mood-btn {
+                padding: 20px 15px;
+            }
+
+            .mood-icon {
+                font-size: 40px;
+            }
+
+            .mood-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" x-data="gerenciarHumor()">
+        <h1>😊 Gerenciador de Humor</h1>
+        <p class="subtitle">Como você está se sentindo hoje?</p>
+
+        <div class="mood-display">
+            <div class="mood-label">Seu Humor Atual</div>
+            <div class="current-mood" x-text="humor.emoji"></div>
+            <div class="mood-text" x-text="humor.descricao"></div>
+        </div>
+
+        <div class="moods-section">
+            <h2 class="section-title">Escolha seu humor:</h2>
+            <div class="mood-grid">
+                <button class="mood-btn feliz" @click="feliz()">
+                    <span class="mood-icon">😀</span>
+                    <span class="mood-name">Feliz</span>
+                </button>
+
+                <button class="mood-btn bravo" @click="bravo()">
+                    <span class="mood-icon">😡</span>
+                    <span class="mood-name">Bravo</span>
+                </button>
+
+                <button class="mood-btn triste" @click="triste()">
+                    <span class="mood-icon">😭</span>
+                    <span class="mood-name">Triste</span>
+                </button>
+
+                <button class="mood-btn sono" @click="sono()">
+                    <span class="mood-icon">😴</span>
+                    <span class="mood-name">Sono</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-title">💡 Dica</div>
+            <div class="info-text">
+                Clique em um dos botões acima para mudar seu humor atual. 
+                Acompanhe suas emoções ao longo do dia!
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function gerenciarHumor() {
+        return {
+            humor: {
+                emoji: '?',
+                descricao: '???'
+            },
+
+            feliz() {
+                this.humor.emoji = '😀'
+                this.humor.descricao = 'Feliz'
+            },
+
+            bravo() {
+                this.humor.emoji = '😡'
+                this.humor.descricao = 'Bravo'
+            },
+
+            triste() {
+                this.humor.emoji = '😭'
+                this.humor.descricao = 'Triste'
+            },
+
+            sono() {
+                this.humor.emoji = '😴'
+                this.humor.descricao = 'Sono'
+            },
+        }
+    }
+</script>
+</html>
