@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Temperatura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .converter-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 18px 80px 18px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .unit-label {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .convert-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .convert-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .convert-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 35px;
+            border-radius: 20px;
+            color: white;
+        }
+
+        .result-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .result-unit {
+            font-size: 24px;
+            opacity: 0.9;
+        }
+
+        .formula {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .info-card p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .icon {
+                font-size: 60px;
+            }
+
+            input[type="number"] {
+                font-size: 20px;
+                padding: 16px 70px 16px 18px;
+            }
+
+            .result-value {
+                font-size: 36px;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon">🌡️</div>
+        <h1>Conversor de Temperatura</h1>
+        <p class="subtitle">Converta Celsius para Fahrenheit instantaneamente</p>
+
+        <div class="converter-section">
+            <div class="input-group">
+                <label for="celsius">Temperatura em Celsius</label>
+                <div class="input-wrapper">
+                    <input type="number" id="celsius" placeholder="0" value="25">
+                    <span class="unit-label">°C</span>
+                </div>
+            </div>
+
+            <button class="convert-btn">🔄 Converter</button>
+        </div>
+
+        <div class="result-section">
+            <div class="result-label">Resultado em Fahrenheit</div>
+            <div class="result-value">
+
+            </div>
+            
+            <div class="formula">
+                Fórmula: °F = (°C × 9/5) + 32
+            </div>
+        </div>
+
+        <div class="info-cards">
+            <div class="info-card">
+                <h3>❄️ Ponto de Congelamento</h3>
+                <p></p>
+            </div>
+            <div class="info-card">
+                <h3>🔥 Ponto de Ebulição</h3>
+                <p>100°C = 212°F</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.querySelector('#celsius')
+        const converterBtn = document.querySelector('.convert-btn')
+        const resultado = document.querySelector('.result-value') 
+
+        converterBtn.addEventListener('click', () => {
+            const temperaturaEmCelsius = (input.value * 9/5) + 32
+            resultado.innerText = temperaturaEmCelsius + ' °F'
+        })
+    </script>
+</body>
+
+</html>
