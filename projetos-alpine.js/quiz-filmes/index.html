@@ -376,17 +376,6 @@
             <p class="quiz-subtitle">Teste seus conhecimentos sobre cinema</p>
         </div>
 
-        <!-- Barra de Progresso -->
-        <div class="progress-section">
-            <div class="question-counter">
-                Questão <span class="question-number">2</span> de <span class="question-number">5</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar"></div>
-            </div>
-            <div class="score">Pontos: 10</div>
-        </div>
-
         <!-- Conteúdo do Quiz -->
         <template x-for="questao in questoes">
             <div class="quiz-content">
@@ -397,23 +386,29 @@
 
                 <div class="answers-section">
                     <template x-for="[chave, valor] in Object.entries(questao.alternativas)">
-                        <button 
-                            @click="verificaResposta(valor, questao)"
-                            class="answer-btn" 
+                        <button @click="verificaResposta(chave, questao, questao.alternativaCorreta)" class="answer-btn"
                             :disabled="questao.resposta"
-                            :class="{'correct' : questao.resposta && questao.resposta === questao.alternativaCorreta && questao.resposta === valor, 'wrong' : questao.resposta && questao.resposta != questao.alternativaCorreta && questao.resposta === valor}" 
-                            x-text="valor"
-                        ></button>
+                            :class="{'correct' : questao.resposta && questao.resposta === questao.alternativaCorreta && questao.resposta === chave, 'wrong' : questao.resposta && questao.resposta != questao.alternativaCorreta && questao.resposta === chave}"
+                            x-text="valor"></button>
                     </template>
                 </div>
             </div>
         </template>
 
         <!-- Ações do Quiz -->
-        <div class="quiz-actions">
-            <button class="btn btn-secondary">⬅️ Anterior</button>
-            <button class="btn btn-primary">Próxima ➡️</button>
-        </div>
+        <template x-if="contador > 30">
+            <div class="quiz-actions">
+                <button class="btn btn-primary">Parabens!!! Você é um verdadeiro cinéfilo</button>
+            </div>
+        </template>
+
+        <template x-if="contador <= 30 && contador > 0">
+            <div class="quiz-actions">
+                <button class="btn btn-primary">Não foi dessa vez ;( mais sorte na próxima</button>
+            </div>
+        </template>
+
+
 
         <!-- Tela de Resultado (comentada para mostrar quiz ativo) -->
         <!--
@@ -451,70 +446,75 @@
                         filme: 'Cisne Negro (Black Swan, 2010)',
                         enunciado: 'Qual é a principal luta interna da personagem Nina Sayers?',
                         alternativas: {
-                            a: 'a) Lidar com a pressão de ser uma bailarina perfeita',
-                            b: 'b) Escolher entre dois namorados',
-                            c: 'c) Esconder um segredo de família',
-                            d: 'd) Fugir de um crime'
+                            a: 'Lidar com a pressão de ser uma bailarina perfeita',
+                            b: 'Escolher entre dois namorados',
+                            c: 'Esconder um segredo de família',
+                            d: 'Fugir de um crime'
                         },
-                        alternativaCorreta: 'a) Lidar com a pressão de ser uma bailarina perfeita',
+                        alternativaCorreta: 'a',
                         resposta: null
                     },
                     {
                         filme: 'Pânico (Scream, 1996)',
                         enunciado: 'Quem é o assassino mascarado no primeiro filme?',
                         alternativas: {
-                            a: 'a) Billy Loomis e Stu Macher',
-                            b: 'b) Sidney Prescott',
-                            c: 'c) Dewey Riley',
-                            d: 'd) Randy Meeks'
+                            a: 'Billy Loomis e Stu Macher',
+                            b: 'Sidney Prescott',
+                            c: 'Dewey Riley',
+                            d: 'Randy Meeks'
                         },
-                        alternativaCorreta: 'a) Billy Loomis e Stu Macher',
+                        alternativaCorreta: 'a',
                         resposta: null
                     },
                     {
                         filme: 'Hereditário (Hereditary, 2018)',
                         enunciado: 'Qual é a principal temática explorada no filme?',
                         alternativas: {
-                            a: 'a) Uma família lidando com traumas e maldições',
-                            b: 'b) Um grupo de amigos em uma viagem',
-                            c: 'c) Um mistério em uma escola',
-                            d: 'd) Um roubo planejado'
+                            a: 'Uma família lidando com traumas e maldições',
+                            b: 'Um grupo de amigos em uma viagem',
+                            c: 'Um mistério em uma escola',
+                            d: 'Um roubo planejado'
                         },
-                        alternativaCorreta: 'a) Uma família lidando com traumas e maldições',
+                        alternativaCorreta: 'a',
                         resposta: null
                     },
                     {
                         filme: 'Patricinhas de Beverly Hills (Clueless, 1995)',
                         enunciado: 'Qual é o nome da personagem principal?',
                         alternativas: {
-                            a: 'a) Cher Horowitz',
-                            b: 'b) Dionne Davenport',
-                            c: 'c) Tai Frasier',
-                            d: 'd) Amber Mariens'
+                            a: 'Cher Horowitz',
+                            b: 'Dionne Davenport',
+                            c: 'Tai Frasier',
+                            d: 'Amber Mariens'
                         },
-                        alternativaCorreta: 'a) Cher Horowitz',
+                        alternativaCorreta: 'a',
                         resposta: null
                     },
                     {
                         filme: 'O Diabo Veste Prada (The Devil Wears Prada, 2006)',
                         enunciado: 'Qual é a profissão de Miranda Priestly?',
                         alternativas: {
-                            a: 'a) Editora-chefe de uma revista de moda',
-                            b: 'b) Designer de moda',
-                            c: 'c) Modelo internacional',
-                            d: 'd) Fotógrafa de moda'
+                            a: 'Editora-chefe de uma revista de moda',
+                            b: 'Designer de moda',
+                            c: 'Modelo internacional',
+                            d: 'Fotógrafa de moda'
                         },
-                        alternativaCorreta: 'a) Editora-chefe de uma revista de moda',
+                        alternativaCorreta: 'a',
                         resposta: null
                     }
                 ],
 
-                verificaResposta(alternativa, questao) {
+                contador: 0,
+
+                verificaResposta(alternativa, questao, alternativaCorreta) {
                     questao.resposta = alternativa
+                    if (questao.resposta === alternativaCorreta) {
+                        this.contador = this.contador + 10
+                    }
                 },
 
                 contarResultado() {
-                    
+
                 }
             }
         }
