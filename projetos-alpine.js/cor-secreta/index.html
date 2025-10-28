@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Jogo da Cor Secreta</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 45px 40px;
+            text-align: center;
+        }
+
+        .game-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
+
+        .secret-color-display {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .secret-color-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .color-box {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 5px solid white;
+        }
+
+        .color-box.hidden {
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            position: relative;
+        }
+
+        .color-box.hidden::before {
+            content: '?';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .attempts-section {
+            background: linear-gradient(135deg, #fff9c4 0%, #ffeb3b 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .attempts-info {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .attempt-item {
+            text-align: center;
+        }
+
+        .attempt-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .attempt-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .color-option {
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-option:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .color-option:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .color-option.selected {
+            border: 5px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .color-option.correct {
+            border: 5px solid white;
+            box-shadow: 0 0 0 3px #28a745;
+            animation: correctBounce 0.5s ease;
+        }
+
+        @keyframes correctBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .color-option.wrong {
+            animation: shake 0.5s ease;
+            opacity: 0.5;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .color-name {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Cores específicas */
+        .color-red { background: #ff6b6b; }
+        .color-blue { background: #4dabf7; }
+        .color-green { background: #51cf66; }
+        .color-yellow { background: #ffd43b; }
+        .color-purple { background: #9775fa; }
+        .color-orange { background: #ff922b; }
+
+        .feedback-message {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .feedback-error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+        }
+
+        .feedback-hint {
+            background: linear-gradient(135deg, #cfe2ff 0%, #9ec5fe 100%);
+            color: #004085;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #7f8c8d 0%, #6c7a7b 100%);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .score-board {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .score-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .game-icon {
+                font-size: 60px;
+            }
+
+            .color-box {
+                width: 120px;
+                height: 120px;
+            }
+
+            .color-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .game-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" x-data="verificaCorSecreta()" x-init="corSorteada = cores[sortearCor()]">
+        <div class="game-icon">🎨</div>
+        <h1>Jogo da Cor Secreta</h1>
+        <p class="subtitle">Adivinhe qual é a cor secreta!</p>
+
+        <div class="secret-color-display">
+            <div class="secret-color-label">🔒 Cor Secreta</div>
+            <div 
+                class="color-box" 
+                :class="{'hidden' : corSorteada != corSelecionada,[corSorteada.tag]: corSorteada != null}"></div>
+        </div>
+
+        <div class="attempts-section">
+            <div class="attempts-info">
+                <div class="attempt-item">
+                    <div class="attempt-label">Tentativas</div>
+                    <div class="attempt-value" x-text="contadorDeTentativas"></div>
+                </div>
+                <div class="attempt-item">
+                    <div class="attempt-label">Pontuação</div>
+                    <div class="attempt-value" x-text="contadorDeVitorias"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="color-options">
+            <template x-for="cor in cores">
+            <button 
+                class="color-option" 
+                :class="cor.tag"
+                @click="corSelecionada = cor; computarVitorias(); computarTentativas()"
+                :disabled="corSelecionada === corSorteada"
+                >
+                <span class="color-name" x-text="cor.nome"></span>
+            </button>
+            </template>
+        </div>
+        
+        <div class="game-controls">
+            <button class="btn btn-reset" @click="corSorteada = cores[sortearCor()]; contadorDeTentativas = 0">🔄 Sortear</button>
+        </div>
+
+        <div class="game-controls">
+            <template x-if="corSorteada === corSelecionada">
+                <button class="btn color-green">✓ CORRETO</button>
+            </template>
+        </div>
+    </div>
+
+    <script>
+        function verificaCorSecreta() {
+            return {
+                cores: [
+                    {
+                        nome: 'vermelho',
+                        tag: 'color-red' 
+                    },
+                    {
+                        nome: 'azul',
+                        tag: 'color-blue' 
+                    },
+                    {
+                        nome: 'verde',
+                        tag: 'color-green' 
+                    },
+                    {
+                        nome: 'amarelo',
+                        tag: 'color-yellow ' 
+                    },
+                    {
+                        nome: 'roxo',
+                        tag: 'color-purple' 
+                    },
+                    {
+                        nome: 'laranja',
+                        tag: 'color-orange' 
+                    },
+                ],
+                corSorteada: null,
+                corSelecionada: null,
+                contadorDeVitorias: 0,
+                contadorDeTentativas: 0,
+
+                sortearCor() {
+                    return Math.floor(Math.random() * this.cores.length)
+                },
+
+                computarVitorias() {
+                    if(this.corSorteada === this.corSelecionada) {
+                        this.contadorDeVitorias++
+                    }
+                },
+
+                computarTentativas() {
+                    if(this.corSorteada != this.corSelecionada) {
+                        this.contadorDeTentativas++
+                    } 
+                }
+            } 
+        }
+    </script>
+</body>
+
+</html>
