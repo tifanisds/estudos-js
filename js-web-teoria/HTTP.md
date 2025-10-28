@@ -15,7 +15,7 @@ Protocolo de aplicação usado para transferir páginas web, imagens, dados de f
 #### HTTPS (HTTP Secure):
 é HTTP sobre TLS (antigo SSL) — ou seja, é o mesmo protocolo HTTP mas rodando dentro de uma camada segura de criptografia (TLS). Tudo trafega cifrado.
 
-![Diferença entre HTTP e HTTPS](./assets/img/diferencas-entre-http-e-https.webp)
+![Diferença entre HTTP e HTTPS](../assets/img/diferencas-entre-http-e-https.webp)
 
 #### Diferença prática
 HTTP não tem criptografia. Então qualquer transferência de informação pode ser interceptada e lida/alterada. Isso já não acontece com o HTTPS já que ele usa o TLS (Transport Layer Security) para cifrar os dados evitando leitura/edição de terceiros
@@ -31,7 +31,7 @@ Ter HTTPS evita avisos que assustam usuários e reduz risco de abandono.
 ### O que é um cliente (navegador) e um servidor
 Cliente / servidor é um modelo de interação no qual um programa envia uma solicitação para outro programa e aguarda uma resposta.. O programa solicitante é chamado de cliente; o programa que responde é chamado de servidor. Embora o modelo cliente / servidor possa ser usado entre programas em um único computador, o termo geralmente se refere a uma rede. Em uma rede, o modelo fornece uma maneira conveniente de interconectar programas que são distribuídos em diferentes locais (IBM)
 
-![Diferença cliente Servidor](./assets/img/cliente-servidor.png)
+![Diferença cliente Servidor](../assets/img/cliente-servidor.png)
 
 #### O que é um cliente
 O cliente é qualquer dispositivo ou software que solicita serviços ou recursos de outro computador (o servidor).
@@ -90,7 +90,7 @@ Resumo visual simplificado:
 
 Usuário → Navegador (Cliente) → Requisição HTTP → Servidor → Resposta HTTP → Navegador → Usuário
 
-![Diferença cliente Servidor](./assets/img/fluxo-de-requisicao.png)
+![Diferença cliente Servidor](../assets/img/fluxo-de-requisicao.png)
 
 ### O que é um request (requisição) e um response (resposta)
 
