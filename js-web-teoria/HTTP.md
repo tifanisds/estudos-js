@@ -15,7 +15,7 @@ Protocolo de aplicação usado para transferir páginas web, imagens, dados de f
 #### HTTPS (HTTP Secure):
 é HTTP sobre TLS (antigo SSL) — ou seja, é o mesmo protocolo HTTP mas rodando dentro de uma camada segura de criptografia (TLS). Tudo trafega cifrado.
 
-![Diferença entre HTTP e HTTPS](../assets/img/diferencas-entre-http-e-https.webp)
+![Diferença entre HTTP e HTTPS](assets/img/diferencas-entre-http-e-https.webp)
 
 #### Diferença prática
 HTTP não tem criptografia. Então qualquer transferência de informação pode ser interceptada e lida/alterada. Isso já não acontece com o HTTPS já que ele usa o TLS (Transport Layer Security) para cifrar os dados evitando leitura/edição de terceiros
