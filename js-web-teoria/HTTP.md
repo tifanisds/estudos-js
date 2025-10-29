@@ -31,7 +31,7 @@ Ter HTTPS evita avisos que assustam usuários e reduz risco de abandono.
 ### O que é um cliente (navegador) e um servidor
 Cliente / servidor é um modelo de interação no qual um programa envia uma solicitação para outro programa e aguarda uma resposta.. O programa solicitante é chamado de cliente; o programa que responde é chamado de servidor. Embora o modelo cliente / servidor possa ser usado entre programas em um único computador, o termo geralmente se refere a uma rede. Em uma rede, o modelo fornece uma maneira conveniente de interconectar programas que são distribuídos em diferentes locais (IBM)
 
-![Diferença cliente Servidor](../assets/img/cliente-servidor.png)
+![Diferença cliente Servidor](assets/img/cliente-servidor.png)
 
 #### O que é um cliente
 O cliente é qualquer dispositivo ou software que solicita serviços ou recursos de outro computador (o servidor).
@@ -90,7 +90,7 @@ Resumo visual simplificado:
 
 Usuário → Navegador (Cliente) → Requisição HTTP → Servidor → Resposta HTTP → Navegador → Usuário
 
-![Diferença cliente Servidor](../assets/img/fluxo-de-requisicao.png)
+![Diferença cliente Servidor](assets/img/fluxo-de-requisicao.png)
 
 ### O que é um request (requisição) e um response (resposta)
 
