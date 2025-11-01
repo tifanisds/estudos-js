@@ -15,7 +15,8 @@ Protocolo de aplicação usado para transferir páginas web, imagens, dados de f
 #### HTTPS (HTTP Secure):
 é HTTP sobre TLS (antigo SSL) — ou seja, é o mesmo protocolo HTTP mas rodando dentro de uma camada segura de criptografia (TLS). Tudo trafega cifrado.
 
-![Diferença entre HTTP e HTTPS](assets/img/diferencas-entre-http-e-https.webp)
+<img src="./assets/img/diferencas-entre-http-e-https.webp" alt="Diferença http e https" width="600">
+
 
 #### Diferença prática
 HTTP não tem criptografia. Então qualquer transferência de informação pode ser interceptada e lida/alterada. Isso já não acontece com o HTTPS já que ele usa o TLS (Transport Layer Security) para cifrar os dados evitando leitura/edição de terceiros
@@ -31,7 +32,7 @@ Ter HTTPS evita avisos que assustam usuários e reduz risco de abandono.
 ### O que é um cliente (navegador) e um servidor
 Cliente / servidor é um modelo de interação no qual um programa envia uma solicitação para outro programa e aguarda uma resposta.. O programa solicitante é chamado de cliente; o programa que responde é chamado de servidor. Embora o modelo cliente / servidor possa ser usado entre programas em um único computador, o termo geralmente se refere a uma rede. Em uma rede, o modelo fornece uma maneira conveniente de interconectar programas que são distribuídos em diferentes locais (IBM)
 
-![Diferença cliente Servidor](assets/img/cliente-servidor.png)
+<img src="./assets/img/cliente-servidor.png" alt="Cliente e Servidor" width="600">
 
 #### O que é um cliente
 O cliente é qualquer dispositivo ou software que solicita serviços ou recursos de outro computador (o servidor).
@@ -90,14 +91,107 @@ Resumo visual simplificado:
 
 Usuário → Navegador (Cliente) → Requisição HTTP → Servidor → Resposta HTTP → Navegador → Usuário
 
-![Diferença cliente Servidor](assets/img/fluxo-de-requisicao.png)
+<img src="assets/img/fluxo-de-requisicao.png" alt="Diferença cliente Servidor" width="600">
+
 
 ### O que é um request (requisição) e um response (resposta)
+Na web, a comunicação entre cliente e servidor ocorre por meio de duas ações principais: o request (solicitação) e a response (resposta). Por exemplo, quando você acessa um site, seu navegador (cliente) envia um request ao servidor onde o site está hospedado. Em seguida, o servidor envia de volta uma response, contendo o conteúdo da página, como textos, imagens ou dados de formulários. (DUPLO D)
+
+#### Como funciona o ciclo de Request e Response?
+Quando você digita um endereço no navegador e pressiona “Enter”, o navegador está enviando uma solicitação (request) para o servidor. Esse processo envolve vários passos, mas aqui está uma visão simplificada:
+
+1 - O navegador envia um request ao servidor. Isso geralmente acontece usando o protocolo HTTP ou HTTPS.
+2 - O servidor processa a solicitação. Ele busca os recursos necessários, como HTML, CSS, JavaScript ou dados de um banco de dados.
+3 - O servidor responde com uma response. O conteúdo é enviado de volta ao navegador, que renderiza a página na tela.
+
+| **Elemento** | **Descrição** |
+|---------------|---------------|
+| **Método** | O tipo de ação que está sendo solicitada (por exemplo, GET, POST, PUT, DELETE). |
+| **URL** | O endereço do recurso que está sendo solicitado. |
+| **Cabeçalhos** | Informações adicionais sobre a requisição, como o tipo de conteúdo aceito pelo cliente ou o endereço de IP do cliente. |
+| **Corpo** | O conteúdo da requisição, se houver. Por exemplo, os dados de um formulário HTML enviados em uma requisição POST. |
+
+#### exemplo básico de como uma solicitação HTTP pode ser feita usando a função fetch() em JavaScript:
+```js
+fetch('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Erro:', error));
+```
+
+#### Tipos de request e response 
+Existem diferentes métodos de request, sendo os mais comuns:
+
+- GET: Pede ao servidor um recurso (como uma página ou uma imagem).
+    Explicação: Solicita dados de um servidor. Apenas lê dados, não altera nada no servidor.
+
+- POST: Envia dados ao servidor.
+    Explicação: Envia dados para o servidor, normalmente para criar recursos ou processar informações.
+
+- PUT: Atualiza um recurso existente no servidor.
+
+- DELETE: Remove um recurso no servidor.
+
+<img src="assets/img/metodos-http.png" alt="Métodos HTTP" width="600">
 
 ### O conceito de stateless (HTTP não mantém estado)
+O protocolo HTTP é stateless (ou seja, “sem estado”) porque cada requisição é independente, o servidor não guarda memória das interações anteriores com o cliente. Isso significa que, toda vez que o navegador envia uma requisição, o servidor a trata como uma nova conexão, sem saber o que aconteceu antes. Por exemplo, ao fazer login em um site, o servidor valida seus dados, mas na próxima requisição ele não “lembra” que você já se autenticou, a menos que o sistema utilize mecanismos como cookies, sessões ou tokens para manter esse estado entre as requisições. Essa característica torna o HTTP mais simples, rápido e escalável, porém exige soluções adicionais para lidar com persistência de informações e autenticação de usuários.
+
+<img src="assets/img/stateless-http.png" alt="Métodos HTTP" width="600">
 
 ### O que é um endpoint / rota / recurso
 
-### Estrutura básica de uma URL
+#### 1) Recurso — o "o quê"
+Um recurso é a informação que você quer acessar no servidor.
+É como um objeto do mundo real: um usuário, um produto, um pedido, uma foto, etc.
 
-### Portas padrão: 80 (HTTP) e 443 (HTTPS)
+Exemplo:
+    - O recurso pode ser um usuário (algo que existe no sistema).
+    - Quando você quer ver todos os usuários, está pedindo o recurso “usuários”.
+Então, “recurso” = o tipo de dado que você está lidando.
+
+#### 2) Rota — o "quem processa"
+A rota é o caminho (ou endereço interno do servidor) que leva até esse recurso. É como um “atalho” que diz qual parte do servidor deve responder a uma requisição.
+
+Exemplo:
+    - A rota /usuarios pode ser configurada para mostrar todos os usuários.
+    - Outra rota /usuarios/:id pode mostrar um usuário específico.
+```js
+app.get("/usuarios", mostrarTodosUsuarios);
+app.get("/usuarios/:id", mostrarUsuarioPorId);
+```
+
+### 3) Endpoint — o "onde/como"
+O endpoint é a junção da rota com o método HTTP (como GET, POST, PUT, DELETE).
+É o endereço completo de uma ação específica entre cliente e servidor.
+
+### Exemplos de Endpoints
+
+| Método | Rota | O que faz |
+|--------|-------|-----------|
+| **GET** | `/usuarios` | Lista todos os usuários |
+| **POST** | `/usuarios` | Cria um novo usuário |
+| **GET** | `/usuarios/1` | Mostra o usuário de ID 1 |
+| **PUT** | `/usuarios/1` | Atualiza o usuário de ID 1 |
+| **DELETE** | `/usuarios/1` | Deleta o usuário de ID 1 |
+
+
+### Estrutura básica de uma URL
+URL significa Uniform Resource Locator, ou “Localizador Uniforme de Recursos”.
+Ela é o endereço completo de um recurso na internet, como o endereço de uma casa, mas no mundo digital.
+
+Exemplo de URL:
+- https://www.exemplo.com:443/usuarios/123?ativo=true#detalhes
+
+Quando um computador se conecta a outro pela internet (por exemplo, quando o navegador acessa um site), essa conexão precisa saber exatamente por onde enviar e receber os dados.
+
+É aí que entram as portas elas funcionam como “portas de entrada e saída” para diferentes tipos de comunicação dentro de um servidor.
+
+Pense no servidor como um prédio:
+- O endereço (domínio) é o prédio (www.site.com);
+- As portas são as entradas específicas para diferentes serviços (como HTTP, HTTPS, FTP etc).
+
+| Porta | Protocolo | Significado | Explicação Detalhada |
+|--------|-------|-----------|---------------------|
+| **80** | HTTP (HyperText Transfer Protocol) | Comunicação padrão sem criptografia | É usada para o tráfego comum da web. Quando você acessa http://site.com, o navegador se conecta à porta 80 do servidor. Os dados viajam em texto puro, o que significa que podem ser interceptados facilmente. |
+| **443** | HTTPS (HyperText Transfer Protocol Secure) | Comunicação segura e criptografada | É usada para conexões HTTPS, que utilizam SSL/TLS para proteger os dados trocados entre cliente e servidor. Quando você acessa https://site.com, o navegador se conecta à porta 443 e estabelece uma conexão segura (com o cadeado na barra de endereços). |
